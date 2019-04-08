@@ -2,85 +2,95 @@
 <html lang="en">
 
 <head>
-    <title>Title</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
 </head>
 
+<!-- Banner -->
 <body>
-    <div class="jumbotron text-center" >
-        <h1 class="display-4" >Anytime is Train Time</h1>
-        <p class="lead">Choo Choo
-            <hr class="my-4">
-    </div>
-    <table class="table table-sm">
+  <div class="jumbotron text-center">
+    <h1 class="display-4">Anytime is Train Time</h1>
+    <p class="lead">Choo Choo
+      <hr class="my-4">
+  </div>
+
+<!-- Table displaying train times -->
+<!-- Continues to add to table without replacement -->
+
+<div class="row">
+    <div class="col-xs-12 col-sm-9">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Train Schedule</h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-hover" id="train-table">
             <thead>
               <tr>
-                <th scope="col">Train Name</th>
-                <th scope="col"></th>
-                <th scope="col">Destination</th>
-                <th scope="col">Frequency</th>
-                <th scope="col">Next Arrival</th>
-                <th scope="col">Minutes Away</th>
-                
+                <th>Train Name</th>
+                <th>Destination</th>
+                <th class="text-center">Frequency</th>
+                <th class="text-center">Next Arrival</th>
+                <th class="text-center">Minutes Away</th>
+                <th class="text-center">Remove</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <th scope="row"></th>
-                <td id ="name-display">Mark</td>
-                <td id ="role-display">Otto</td>
-                <td id ="startdate-display">MM/DD/YYYY</td>
-                <td id ="monthly-display">text</td>
-                <td>1</td>
-              </tr>
+            <tbody id="train-table-rows">
             </tbody>
           </table>
-          <form>
-                <div class="form-row">
-                  <div class="form-group col-12">
-                    <label for="inputEmail4">Employee Name</label>
-                    <input type="name" class="form-control" id="name" placeholder="John Doe">
-                  </div>
-                  <div class="form-group col-12">
-                    <label for="inputPassword4">Role</label>
-                    <input type="role" class="form-control" id="role" placeholder="CEO">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputAddress">Start Date</label>
-                  <input type="date" class="form-control" id="date" placeholder="MM/Dd/YYYY">
-                </div>
-                <div class="form-group">
-                  <label for="inputAddress2">Montly Rate </label>
-                  <input type="text" class="form-control" id="monthly" placeholder="20000">
-                </div>
-               
-                </div>
-                <button type="submit" class="btn btn-primary" id="submit">Submit </button>
-              </form>
+        </div>
+      </div>
+    </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-        
+
+  <!-- Searching for trains -->
+  <form>
+    <div class="form-row">
+      <div class="form-group col-12">
+        <label for="train">Train Name</label>
+        <input type="name" class="form-control" id="train-name" placeholder="Trenton Express">
+      </div>
+      <div class="form-group col-12">
+        <label for="place">Destination</label>
+        <input type="role" class="form-control" id="destination" placeholder="Trenton">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="first">First Train Time (HH:mm - military time)</label>
+      <input type="date" class="form-control" id="first-train" placeholder="05:35 PM">
+    </div>
+    <div class="form-group">
+      <label for="freq">Frequency</label>
+      <input type="text" class="form-control" id="frequency" placeholder="10">
+    </div>
+
+    </div>
+    <button type="submit" class="btn btn-primary" id="submit">Submit </button>
+  </form>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
   <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-<script src="./assets/javascript/app.js"></script>
+  <script src="./assets/javascript/app.js"></script>
 </body>
 
 </html>
